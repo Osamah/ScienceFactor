@@ -28,19 +28,42 @@ if (MediaStreamTrack && MediaStreamTrack.getSources) {
 			console.log('No rear camera found');
 		}
 
-		if (navigator.getUserMedia) {
-			navigator.getUserMedia({
-				video: {
-					optional: [{
-						sourceId: rearCameraId
-					}]
-				}
-			}, success, errorCallback);
-		} else {
-			console.log('navigator.getUserMedia doesnt exist');
-		}
 
 	});
 } else {
 	console.log('MediaStreamTrack not supported');
+}
+
+
+if (navigator.getUserMedia) {
+	navigator.getUserMedia({
+		video: {
+			optional: [{
+				sourceId: rearCameraId
+			}]
+		}
+	}, success, errorCallback);
+} else {
+	console.log('navigator.getUserMedia doesnt exist');
+}
+
+
+document.getElementById('take-pic').onclick = function() {
+	takePicture();
+}
+document.getElementById('retry-pic').onclick = function() {
+	retryPicture();
+}
+
+function takePicture() {
+	document.getElementsByTagName('video')[0].pause();
+	document.getElementById('take-pic').style.display = "none";
+	document.getElementById('retry-pic').style.display = "block";
+	document.getElementById('send-pic').style.display = "block";
+}
+function retryPicture() {
+	document.getElementsByTagName('video')[0].play();
+	document.getElementById('take-pic').style.display = "block";
+	document.getElementById('retry-pic').style.display = "none";
+	document.getElementById('send-pic').style.display = "none";
 }
