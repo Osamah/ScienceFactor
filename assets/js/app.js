@@ -29,22 +29,21 @@ if (MediaStreamTrack && MediaStreamTrack.getSources) {
 		}
 
 
+		if (navigator.getUserMedia) {
+			navigator.getUserMedia({
+				video: {
+					optional: [{
+						sourceId: rearCameraId
+					}]
+				}
+			}, success, errorCallback);
+		} else {
+			console.log('navigator.getUserMedia doesnt exist');
+		}
+
 	});
 } else {
 	console.log('MediaStreamTrack not supported');
-}
-
-
-if (navigator.getUserMedia) {
-	navigator.getUserMedia({
-		video: {
-			optional: [{
-				sourceId: rearCameraId
-			}]
-		}
-	}, success, errorCallback);
-} else {
-	console.log('navigator.getUserMedia doesnt exist');
 }
 
 
