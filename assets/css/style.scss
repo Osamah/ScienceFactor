@@ -40,7 +40,7 @@
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
 body {
-	font-family: sans-serif;
+	font-family: 'Roboto', sans-serif;
 	font-size: 1em;
 }
 
@@ -48,113 +48,213 @@ h1 {
 	font-size: 1.75em;
 }
 
-$green:			#329f81;
-$light-green:	#74d3b9;
-$dark-green:	#1e5e4d;
+$teal-50	:	#E0F2F1;
+$teal-100	:	#B2DFDB;
+$teal-200	:	#80CBC4;
+$teal-300	:	#4DB6AC;
+$teal-400	:	#26A69A;
+$teal-500	:	#009688;
+$teal-600	:	#00897B;
+$teal-700	:	#00796B;
+$teal-800	:	#00695C;
+$teal-900	:	#004D40;
 
-
-header {
-	background: $green;
-	border-bottom: 5px solid $dark-green;
-	padding: 20px;
-	color: white;
+@mixin border-radius() {
+	border-radius: 2px;
+}
+@mixin box-shadow() {
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
 
-.btn-round {
-	background-color: $green;
+*:focus {
+	outline: 0;
+}
+
+header {
+	background: $teal-700;
+	padding: 20px;
+	color: white;
+	@include box-shadow;
+}
+
+.btn {
 	border: none;
-	border-radius: 28px;
-	width: 56px;
-	height: 56px;
-	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-	line-height: 1;
-	font-size: 36px;
 	position: relative;
 	cursor: pointer;
+	@include border-radius;
+	@include box-shadow;
+}
+
+.btn-flat {
+	background-color: white;
+	padding: 15px 20px;
+	color: $teal-700;
+}
+
+.btn-raised {
+	background-color: $teal-700;
+	color: white;
+	padding: 15px 20px;
+}
+
+.btn-float {
+	background-color: $teal-700;
+	color: white;
+	width: 56px;
+	height: 56px;
+	border-radius: 28px;
+	line-height: 1;
+	font-size: 36px;
 }
 
 #page-container {
 	position: relative;
 
-	video {
-		width: 100%;
+	.page-content {
+		display: none;
+
+		&.initial {
+			display: block;
+		}
 	}
 
-	.corners {
-		.corner {
-			$margin: 20px;
+	#journal-input {
 
-			position: absolute;
-			width: 60px;
-			height: 15px;
-			background: white;
+		.text-input {
+			position: relative;
+			padding: 20px;
+			margin-bottom: 20px;
 
-			&:after {
+			input[type="text"] {
+				width: 100%;
+				border: none;
+				padding: 0 0 50px;
+				transition: margin 0.5s;
+
+				&:focus {
+					margin-bottom: 50px;
+
+					+ button {
+						visibility: visible;
+						opacity: 1;
+					}
+				}
+			}
+			button {
+				position: absolute;
+				bottom: 0;
+				visibility: hidden;
+				opacity: 0;
+				transition: opacity 0.5s;
+				
+				&:focus {
+					visibility: visible;
+					opacity: 1;
+				}
+			}
+		}
+		.video-input {
+			button {
+				margin: 0 auto;
 				display: block;
-				content: "";
-				background: white;
-			}
 
-			&.top-left {
-				top: $margin;
-				left: $margin;
-
-				&:after {
-					width: 15px;
-					height: 45px;
-					margin-top: 15px;
-				}
-			}
-			&.top-right {
-				top: $margin;
-				right: $margin;
-
-				&:after {
-					width: 15px;
-					height: 45px;
-					margin-left: 45px;
-					margin-top: 15px;
-				}
-			}
-			&.bottom-left {
-				bottom: $margin + 20px;
-				left: $margin;
-
-				&:after {
-					width: 15px;
-					height: 45px;
-					margin-top: -45px;
-				}
-			}
-			&.bottom-right {
-				bottom: $margin + 20px;
-				right: $margin;
-
-				&:after {
-					width: 15px;
-					height: 45px;
-					margin-left: 45px;
-					margin-top: -45px;
+				&:before {
+					content: "or";
+					display: block;
+					position: absolute;
+					bottom: 60px;
+					color: black;
+					left: 50%;
+					transform: translateX(-50%);
 				}
 			}
 		}
 	}
 
-	#take-pic, #retry-pic, #send-pic {
-		position: absolute;
-		left: 50%;
-		margin-left: -28px;
-		bottom: 50px;
-	}
-	#take-pic {
+	#ocr-input {
+		video {
+			width: 100%;
+		}
+		canvas {
+			display: none;
+		}
 
-	}
-	#retry-pic {
-		display: none;
-		margin-left: -61px;
-	}
-	#send-pic {
-		display: none;
-		margin-left: 5px;
+		.corners {
+			.corner {
+				$margin: 20px;
+
+				position: absolute;
+				width: 60px;
+				height: 15px;
+				background: white;
+
+				&:after {
+					display: block;
+					content: "";
+					background: white;
+				}
+
+				&.top-left {
+					top: $margin;
+					left: $margin;
+
+					&:after {
+						width: 15px;
+						height: 45px;
+						margin-top: 15px;
+					}
+				}
+				&.top-right {
+					top: $margin;
+					right: $margin;
+
+					&:after {
+						width: 15px;
+						height: 45px;
+						margin-left: 45px;
+						margin-top: 15px;
+					}
+				}
+				&.bottom-left {
+					bottom: $margin + 20px;
+					left: $margin;
+
+					&:after {
+						width: 15px;
+						height: 45px;
+						margin-top: -45px;
+					}
+				}
+				&.bottom-right {
+					bottom: $margin + 20px;
+					right: $margin;
+
+					&:after {
+						width: 15px;
+						height: 45px;
+						margin-left: 45px;
+						margin-top: -45px;
+					}
+				}
+			}
+		}
+
+		#take-pic, #retry-pic, #send-pic {
+			position: absolute;
+			left: 50%;
+			margin-left: -28px;
+			bottom: 50px;
+		}
+		#take-pic {
+
+		}
+		#retry-pic {
+			display: none;
+			margin-left: -61px;
+		}
+		#send-pic {
+			display: none;
+			margin-left: 5px;
+		}
 	}
 }
