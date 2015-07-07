@@ -90,15 +90,32 @@ function initializeCameraInput () {
 		canvas[0].height = h;
 
 		ctx.drawImage(video[0], 0, 0, w, h);
+		canvas.cropper({
+			movable: false,
+			zoomable: false,
+			background: false,
+			guides: false,
+			autoCrop: false,
+			crop: function(data) {
+				console.log(data);
+			},
+			built: function() {
+				video.hide();
+			}
+		});
+		
 	}
 	function retryPicture() {
 		video[0].play();
 		$('#take-pic').show();
 		$('#retry-pic').hide();
 		$('#send-pic').hide();
+		video.show();
+		canvas.cropper('destroy');
 	}
 	function sendPicture() {
-		var string = OCRAD(canvas[0]);
+		var croppedCanvas = canvas.cropper('getCroppedCanvas');
+		var string = OCRAD(croppedCanvas);
 		videostream.stop();
 		alert(string);
 	}
